@@ -8,8 +8,8 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Browse", path: "/browse" },
-    { name: "Share", path: "/share" },
     { name: "Resources", path: "/resources" },
+    { name: "Login", path: "/Login" },
   ];
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
