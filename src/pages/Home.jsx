@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import bannerImg from "../assets/img.jpg"; // Your preferred image
 import img3 from "../assets/img3.jpg"; // Background for Call to Action4
-import img4 from "../assets/img4.jpg"; // Background for Call to Action
+import img4 from "../assets/img4.jpg"; // Image for Informational Section
 
 const testimonials = [
   {
@@ -24,6 +24,56 @@ const testimonials = [
     author: "Maya R.",
   },
 ];
+
+// The “How Sharing Feels” section exactly like your provided snippet
+function HowSharingFeelsSection() {
+  return (
+    <section className="container mx-auto px-6 py-16 max-w-7xl">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-10">
+        {/* Left Image: hidden on xs, visible sm+ */}
+        <div className="hidden sm:block sm:flex-shrink-0 sm:w-1/2 md:w-5/12 lg:w-5/12 xl:w-4/12">
+          <img
+            src="//d37v7cqg82mgxu.cloudfront.net/img/home/online-therapy-from-laptop.jpg"
+            alt="Sharing failure support illustration"
+            loading="lazy"
+            className="rounded-lg shadow-md w-full object-cover"
+          />
+        </div>
+
+        {/* Right content */}
+        <div className="w-full sm:w-1/2 md:w-7/12 lg:w-6/12 xl:w-4/12 px-4">
+          <h6 className="text-yellow-600 uppercase font-semibold mb-6 tracking-wide text-sm">
+            How Sharing Feels
+          </h6>
+
+          {/* Steps container max width like the original 350px */}
+          <div style={{ maxWidth: "350px" }}>
+            {[
+              "Feel seen and heard — expressing your struggles in a supportive space.",
+              "Recognize you're not alone; others share similar setbacks and growth journeys.",
+              "Gain clarity and new perspectives by reflecting on your experiences.",
+            ].map((text, i) => (
+              <div key={i} className="flex items-center mb-3 last:mb-0">
+                {/* Large number like original style */}
+                <div
+                  className="font-bold leading-none"
+                  style={{ fontSize: "5em", width: "1em", lineHeight: 1 }}
+                  aria-hidden="true"
+                >
+                  {i + 1}
+                </div>
+                {/* Step description */}
+                <div className="font-semibold text-lg leading-none flex-shrink">
+                  {text}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -93,16 +143,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container max-w-5xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12">
-        {/* Image side */}
-        <div className="md:w-1/2">
-          <img
-            src={img4}
-            alt="Empathy and support"
-            className="rounded-lg shadow-lg w-full object-cover"
-          />
-        </div>
+      {/* How Sharing Feels Section (exact design from your code snippet) */}
+      <HowSharingFeelsSection />
 
+      {/* Informational Section */}
+      <section className="container max-w-5xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12">
         {/* Text side */}
         <div className="md:w-1/2 text-center md:text-left space-y-6">
           <p className="text-gray-800 text-2xl md:text-3xl font-bold tracking-wide sm:px-4">
@@ -114,6 +159,14 @@ export default function Home() {
             Our community fosters empathy, healing, and growth through openly
             shared experiences. Read, relate, and find hope in every story.
           </p>
+        </div>
+        {/* Image side */}
+        <div className="md:w-1/2">
+          <img
+            src={img4}
+            alt="Empathy and support"
+            className="rounded-lg shadow-lg w-full object-cover"
+          />
         </div>
       </section>
 
@@ -147,7 +200,6 @@ export default function Home() {
                 </figure>
               ))}
             </div>
-
             {/* Prev Button */}
             <button
               onClick={prevSlide}
@@ -169,7 +221,6 @@ export default function Home() {
                 />
               </svg>
             </button>
-
             {/* Next Button */}
             <button
               onClick={nextSlide}
@@ -192,7 +243,6 @@ export default function Home() {
               </svg>
             </button>
           </div>
-
           {/* Dots */}
           <div className="flex justify-center mt-10 space-x-4">
             {testimonials.map((_, idx) => (
