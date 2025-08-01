@@ -42,7 +42,7 @@ function HowSharingFeelsSection() {
 
         {/* Right content */}
         <div className="w-full sm:w-1/2 md:w-7/12 lg:w-6/12 xl:w-4/12 px-4">
-          <h6 className="text-yellow-600 uppercase font-semibold mb-6 tracking-wide text-sm">
+          <h6 className="text-yellow-600 uppercase font-semibold mb-6 tracking-wide text-3xl">
             How Sharing Feels
           </h6>
 
