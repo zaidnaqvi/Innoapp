@@ -45,8 +45,8 @@ export default function Home() {
       </section>
 
       {/* Informational Section */}
-      <section className="container mx-auto px-4 py-16 text-center max-w-3xl">
-        <p className="text-gray-700 text-xl md:text-2xl leading-relaxed mb-4 font-medium">
+      <section className="container mx-auto px-4 py-16 text-center max-w-3xl space-y-6">
+        <p className="text-gray-700 text-xl md:text-2xl leading-relaxed font-medium">
           Everyone has setbacks. Here, you can share yours{" "}
           <span className="text-black font-semibold">anonymously</span> and find
           comfort in knowing you’re not alone.
@@ -55,6 +55,67 @@ export default function Home() {
           Our community fosters empathy, healing, and growth through openly
           shared experiences. Read, relate, and find hope in every story.
         </p>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="container mx-auto px-4 py-16 max-w-4xl">
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-12">
+          What Our Users Say
+        </h2>
+        <div className="space-y-10">
+          <blockquote className="bg-white p-8 rounded-xl shadow-lg">
+            <p className="text-xl italic text-gray-700">
+              “Sharing my story here helped me see failure in a new light. The
+              support is incredible.”
+            </p>
+            <footer className="mt-4 text-right text-gray-600 font-semibold">
+              — Sarah M.
+            </footer>
+          </blockquote>
+          <blockquote className="bg-white p-8 rounded-xl shadow-lg">
+            <p className="text-xl italic text-gray-700">
+              “Reading stories from others reminds me I’m not alone, and that’s
+              powerful.”
+            </p>
+            <footer className="mt-4 text-right text-gray-600 font-semibold">
+              — James L.
+            </footer>
+          </blockquote>
+        </div>
+      </section>
+
+      {/* Featured Stories Teaser */}
+      <section className="container mx-auto px-4 py-16 max-w-4xl text-center">
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-6">
+          Featured Stories
+        </h2>
+        <p className="text-gray-700 max-w-2xl mx-auto mb-8">
+          Dive into some of the most inspiring failure stories from our
+          community and how they turned setbacks into success.
+        </p>
+        <Link
+          to="/browse"
+          className="inline-block bg-yellow-500 text-black font-bold px-6 py-3 rounded shadow hover:bg-yellow-600 transition"
+        >
+          Explore Stories
+        </Link>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="bg-yellow-600 py-16 text-center text-white">
+        <h3 className="text-3xl font-extrabold mb-4">
+          Ready to Share Your Journey?
+        </h3>
+        <p className="mb-8 max-w-xl mx-auto">
+          Join our community today and inspire others by sharing your story of
+          failure and growth.
+        </p>
+        <Link
+          to="/login"
+          className="bg-white text-yellow-600 font-bold px-10 py-4 rounded-lg shadow hover:bg-gray-100 transition"
+        >
+          Get Started
+        </Link>
       </section>
     </>
   );
