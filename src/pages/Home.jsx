@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import bannerImg from "../assets/img.jpg"; // Your preferred image
-import img3 from "../assets/img3.jpg"; // Background for Call to Action
+import img3 from "../assets/img3.jpg"; // Background for Call to Action4
+import img4 from "../assets/img4.jpg"; // Background for Call to Action
 
 const testimonials = [
   {
@@ -92,17 +93,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Informational Section */}
-      <section className="container max-w-3xl mx-auto px-6 py-16 text-center space-y-8">
-        <p className="text-gray-800 text-2xl md:text-3xl font-bold tracking-wide sm:px-4">
-          Everyone has setbacks. Here, you can share yours{" "}
-          <span className="text-yellow-600 font-extrabold">anonymously</span>{" "}
-          and find comfort in knowing you’re not alone.
-        </p>
-        <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
-          Our community fosters empathy, healing, and growth through openly
-          shared experiences. Read, relate, and find hope in every story.
-        </p>
+      <section className="container max-w-5xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+        {/* Image side */}
+        <div className="md:w-1/2">
+          <img
+            src={img4}
+            alt="Empathy and support"
+            className="rounded-lg shadow-lg w-full object-cover"
+          />
+        </div>
+
+        {/* Text side */}
+        <div className="md:w-1/2 text-center md:text-left space-y-6">
+          <p className="text-gray-800 text-2xl md:text-3xl font-bold tracking-wide sm:px-4">
+            Everyone has setbacks. Here, you can share yours{" "}
+            <span className="text-yellow-600 font-extrabold">anonymously</span>{" "}
+            and find comfort in knowing you’re not alone.
+          </p>
+          <p className="text-gray-600 text-lg md:text-xl max-w-xl leading-relaxed px-2 sm:px-0">
+            Our community fosters empathy, healing, and growth through openly
+            shared experiences. Read, relate, and find hope in every story.
+          </p>
+        </div>
       </section>
 
       {/* Testimonials Slider Section */}
