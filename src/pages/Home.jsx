@@ -1,7 +1,56 @@
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import bannerImg from "../assets/img.jpg"; // Your preferred image
+import img3 from "../assets/img3.jpg"; // Background for Call to Action
+
+const testimonials = [
+  {
+    id: 1,
+    quote:
+      "Sharing my story here helped me see failure in a new light. The support is incredible.",
+    author: "Sarah M.",
+  },
+  {
+    id: 2,
+    quote:
+      "Reading stories from others reminds me I’m not alone, and that’s powerful.",
+    author: "James L.",
+  },
+  {
+    id: 3,
+    quote:
+      "This community has helped me accept failure as a vital step to success.",
+    author: "Maya R.",
+  },
+];
 
 export default function Home() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const timeoutRef = useRef(null);
+
+  // Auto slide every 6 seconds
+  useEffect(() => {
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setCurrentIndex((currentIndex + 1) % testimonials.length);
+    }, 6000);
+    return () => clearTimeout(timeoutRef.current);
+  }, [currentIndex]);
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex(
+      (currentIndex - 1 + testimonials.length) % testimonials.length
+    );
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((currentIndex + 1) % testimonials.length);
+  };
+
   return (
     <>
       {/* Banner Section */}
@@ -10,10 +59,7 @@ export default function Home() {
         style={{ backgroundImage: `url(${bannerImg})` }}
         aria-label="Inspirational banner"
       >
-        {/* Dark overlay with gentle gradient for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60" />
-
-        {/* Banner Content */}
         <div className="relative z-10 px-6 text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-light text-yellow-100 drop-shadow-lg mb-6 tracking-wide">
             Why{" "}
@@ -24,14 +70,13 @@ export default function Home() {
           <p className="text-lg md:text-2xl text-yellow-100 max-w-3xl mx-auto mb-6 highlight-text-shadow font-light tracking-wide">
             A safe, anonymous space to share your failures and inspire hope.
           </p>
-          <p className="text-yellow-200  max-w-xl mx-auto mb-5 drop-shadow-sm  tracking-wide">
+          <p className="text-yellow-200 max-w-xl mx-auto mb-5 drop-shadow-sm tracking-wide">
             “Failure is not the opposite of success — it’s part of success.”
           </p>
-
           <div className="flex flex-col sm:flex-row justify-center gap-6 max-w-sm mx-auto animate-fade-in">
             <Link
               to="/login"
-              className="bg-yellow-400 text-black font-bold px-5 py-4 rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-105 transition-transform  focus:outline-none focus:ring-4 focus:ring-yellow-300"
+              className="bg-yellow-400 text-black font-bold px-5 py-4 rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-105 transition-transform focus:outline-none focus:ring-4 focus:ring-yellow-300"
               aria-label="Share your story - requires login"
             >
               Share Your Story
@@ -60,37 +105,97 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials Slider Section */}
       <section className="bg-yellow-50 py-16">
-        <div className="container max-w-4xl mx-auto px-6">
+        <div className="container max-w-4xl mx-auto px-6 relative">
           <h2 className="text-4xl font-bold text-center text-gray-900 mb-14 tracking-tight">
             What Our Users Say
           </h2>
-          <div className="space-y-12 max-w-3xl mx-auto">
-            {/* Testimonial 1 */}
-            <figure className="bg-white rounded-xl p-8 shadow-lg border border-yellow-300">
-              <blockquote>
-                <p className="text-xl text-gray-700 italic leading-relaxed drop-shadow-sm">
-                  “Sharing my story here helped me see failure in a new light.
-                  The support is incredible.”
-                </p>
-              </blockquote>
-              <figcaption className="mt-6 text-right font-semibold text-yellow-700">
-                — Sarah M.
-              </figcaption>
-            </figure>
-            {/* Testimonial 2 */}
-            <figure className="bg-white rounded-xl p-8 shadow-lg border border-yellow-300">
-              <blockquote>
-                <p className="text-xl text-gray-700 italic leading-relaxed drop-shadow-sm">
-                  “Reading stories from others reminds me I’m not alone, and
-                  that’s powerful.”
-                </p>
-              </blockquote>
-              <figcaption className="mt-6 text-right font-semibold text-yellow-700">
-                — James L.
-              </figcaption>
-            </figure>
+
+          {/* Slides container */}
+          <div className="relative max-w-3xl mx-auto overflow-hidden bg-white rounded-xl shadow-lg border border-yellow-300">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {testimonials.map(({ id, quote, author }) => (
+                <figure
+                  key={id}
+                  className="flex-shrink-0 w-full px-8 py-12 text-center"
+                  aria-label={`Testimonial from ${author}`}
+                >
+                  <blockquote>
+                    <p className="text-xl text-gray-700 italic leading-relaxed drop-shadow-sm select-text">
+                      “{quote}”
+                    </p>
+                  </blockquote>
+                  <figcaption className="mt-10 text-yellow-700 font-semibold text-lg">
+                    — {author}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+
+            {/* Prev Button */}
+            <button
+              onClick={prevSlide}
+              aria-label="Previous testimonial"
+              className="absolute top-1/2 left-4 -translate-y-1/2 rounded-full bg-yellow-200 hover:bg-yellow-500 text-white shadow-lg p-3 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={nextSlide}
+              aria-label="Next testimonial"
+              className="absolute top-1/2 right-4 -translate-y-1/2 rounded-full bg-yellow-200 hover:bg-yellow-500 text-white shadow-lg p-3 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center mt-10 space-x-4">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => goToSlide(idx)}
+                aria-label={`Go to testimonial ${idx + 1}`}
+                aria-current={currentIndex === idx}
+                className={`h-4 w-4 rounded-full transition-colors duration-300 ${
+                  currentIndex === idx
+                    ? "bg-yellow-300"
+                    : "bg-yellow-200 hover:bg-yellow-400"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -115,7 +220,14 @@ export default function Home() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="bg-yellow-600 py-20 text-center text-white">
+      <section
+        className="bg-yellow-600 py-20 text-center text-white"
+        style={{
+          backgroundImage: `url(${img3})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <h3 className="text-4xl font-light mb-6 tracking-wide">
           Ready to Share Your Journey?
         </h3>

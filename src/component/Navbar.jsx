@@ -108,8 +108,8 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)} // close menu on link click
                   className={`block py-2 rounded transition-colors duration-300 ${
                     location.pathname === link.path
-                      ? "bg-blue-600 text-white font-bold"
-                      : "hover:bg-blue-600 hover:text-white"
+                      ? " text-yellow-300 font-bold"
+                      : " hover:text-yellow-300"
                   }`}
                 >
                   {link.name}
