@@ -283,27 +283,33 @@ export default function Home() {
 
       {/* Call to Action Section */}
       <section
-        className="bg-yellow-600 py-20 text-center text-white"
+        className="relative bg-yellow-600 py-20 text-center text-white"
         style={{
           backgroundImage: `url(${img3})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <h3 className="text-4xl sm:mb-6  font-light mb-28 tracking-wide">
-          Ready to Share Your Journey?
-        </h3>
-        <p className="max-w-xl mx-auto sm:mb-10 mb-16 text-lg md:text-xl leading-relaxed px-4">
-          Join our community today and inspire others by sharing your story of
-          failure and growth. Your voice matters.
-        </p>
-        <Link
-          to="/login"
-          className="bg-white text-yellow-600 font-bold px-12 py-4 rounded-lg shadow-xl hover:bg-yellow-100 transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-300"
-          aria-label="Get started by logging in"
-        >
-          Get Started
-        </Link>
+        {/* Dark gradient overlay, similar to banner */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-black/20 to-black/10" />
+
+        {/* Content wrapper with relative z-10 to appear above overlay */}
+        <div className="relative z-10 max-w-4xl mx-auto px-4">
+          <h3 className="text-4xl sm:mb-6 font-light mb-28 tracking-wide">
+            Ready to Share Your Journey?
+          </h3>
+          <p className="max-w-xl mx-auto sm:mb-10 mb-16 text-lg md:text-xl leading-relaxed">
+            Join our community today and inspire others by sharing your story of
+            failure and growth. Your voice matters.
+          </p>
+          <Link
+            to="/login"
+            className="bg-white text-yellow-600 font-bold px-12 py-4 rounded-lg shadow-xl hover:bg-yellow-100 transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-300"
+            aria-label="Get started by logging in"
+          >
+            Get Started
+          </Link>
+        </div>
       </section>
     </>
   );
