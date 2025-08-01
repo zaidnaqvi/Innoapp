@@ -74,9 +74,9 @@ function StoryCard({ story, onReactionToggle }) {
   };
 
   return (
-    <article className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+    <article className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-4 sm:p-6">
       {/* Header with category and date */}
-      <div className="flex items-center justify-between mb-4 text-gray-600 font-semibold text-sm">
+      <div className="flex items-center justify-between mb-4 text-gray-600 font-semibold text-xs sm:text-sm">
         <div className="flex items-center gap-2">
           <CategoryIcon category={story.category} />
           <span className="capitalize">{story.category}</span>
@@ -91,15 +91,15 @@ function StoryCard({ story, onReactionToggle }) {
       </div>
 
       {/* Story text and lesson */}
-      <p className="text-gray-800 mb-4 text-base">{story.text}</p>
+      <p className="text-gray-800 mb-4 text-sm sm:text-base">{story.text}</p>
       {story.learned && (
-        <p className="italic text-gray-600 mb-6 pl-4 border-l-4 border-yellow-400">
+        <p className="italic text-gray-600 mb-6 pl-3 sm:pl-4 border-l-4 border-yellow-400 text-xs sm:text-sm">
           <span className="font-semibold">Lesson:</span> {story.learned}
         </p>
       )}
 
       {/* Reaction buttons */}
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-wrap gap-2 sm:gap-4 justify-start items-center mt-4">
         {reactionTypes.map(({ type, label, icon }) => {
           const active = userReactions[type];
           return (
@@ -156,52 +156,65 @@ export default function Browse() {
   };
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-12 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-extrabold text-center mb-16 tracking-tight text-gray-900">
-        Browse Failure Stories
-      </h1>
+    <>
+      {/* Global CSS to hide scrollbar for horizontal overflow */}
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+      `}</style>
 
-      {/* Category Filter Pills */}
-      <nav
-        aria-label="Story categories"
-        className="flex flex-wrap justify-center gap-6 mb-14"
-      >
-        {categories.map(({ label, icon }) => {
-          const isActive = filter === label;
-          return (
-            <button
-              key={label}
-              onClick={() => setFilter(label)}
-              aria-current={isActive ? "true" : undefined}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold border-2 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-yellow-400 transition ${
-                isActive
-                  ? "bg-yellow-500 text-white border-yellow-500 shadow-lg"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-yellow-100"
-              }`}
-            >
-              <span className="text-xl">{icon}</span>
-              <span>{label}</span>
-            </button>
-          );
-        })}
-      </nav>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 md:py-12 bg-gray-50 min-h-screen">
+        <h1 className="text-4xl font-extrabold text-center mb-16 tracking-tight text-gray-900">
+          Browse Failure Stories
+        </h1>
 
-      {/* Stories Grid */}
-      {filteredStories.length > 0 ? (
-        <section className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredStories.map((story) => (
-            <StoryCard
-              key={story.id}
-              story={story}
-              onReactionToggle={handleReactionToggle}
-            />
-          ))}
-        </section>
-      ) : (
-        <p className="text-center text-gray-600 font-semibold text-lg mt-20">
-          No stories found in this category.
-        </p>
-      )}
-    </main>
+        {/* Category Filter Pills */}
+        <nav
+          aria-label="Story categories"
+          className="flex flex-wrap sm:flex-nowrap justify-start sm:justify-center gap-4 mb-14 overflow-x-auto no-scrollbar px-4 sm:px-0"
+        >
+          {categories.map(({ label, icon }) => {
+            const isActive = filter === label;
+            return (
+              <button
+                key={label}
+                onClick={() => setFilter(label)}
+                aria-current={isActive ? "true" : undefined}
+                className={`inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold border-2 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-yellow-400 transition text-sm sm:text-base ${
+                  isActive
+                    ? "bg-yellow-500 text-white border-yellow-500 shadow-lg"
+                    : "bg-white text-gray-700 border-gray-300 hover:bg-yellow-100"
+                }`}
+              >
+                <span className="text-xl">{icon}</span>
+                <span>{label}</span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Stories Grid */}
+        {filteredStories.length > 0 ? (
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {filteredStories.map((story) => (
+              <StoryCard
+                key={story.id}
+                story={story}
+                onReactionToggle={handleReactionToggle}
+              />
+            ))}
+          </section>
+        ) : (
+          <p className="text-center text-gray-600 font-semibold text-lg mt-20">
+            No stories found in this category.
+          </p>
+        )}
+      </main>
+    </>
   );
 }
