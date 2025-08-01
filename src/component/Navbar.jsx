@@ -47,11 +47,11 @@ export default function Navbar() {
         <button
           onClick={toggleMenu}
           aria-label="Toggle Menu"
-          className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-600 rounded"
+          className="md:hidden focus:outline-none"
         >
           <svg
             className={`w-7 h-7 text-black transition-transform duration-300 ${
-              menuOpen ? "rotate-45" : ""
+              menuOpen ? "rotate-90" : ""
             }`}
             fill="none"
             stroke="currentColor"
