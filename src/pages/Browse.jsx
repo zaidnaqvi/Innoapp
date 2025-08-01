@@ -7,23 +7,6 @@ import {
   FaListAlt,
 } from "react-icons/fa";
 
-const sampleStories = [
-  {
-    id: 1,
-    category: "Academic",
-    text: "I failed an important exam and felt devastated.",
-    learned: "Never underestimate consistent study.",
-    date: "2025-07-10",
-  },
-  {
-    id: 2,
-    category: "Professional",
-    text: "My startup pitch was rejected multiple times.",
-    learned: "Persistence is key to success.",
-    date: "2025-06-20",
-  },
-];
-
 const categories = [
   { label: "All", icon: <FaListAlt /> },
   { label: "Academic", icon: <FaGraduationCap /> },
@@ -31,13 +14,53 @@ const categories = [
   { label: "Professional", icon: <FaBriefcase /> },
 ];
 
+const sampleStories = [
+  {
+    id: 1,
+    category: "Academic",
+    text: "I failed an important exam and felt devastated.",
+    learned: "Never underestimate consistent study.",
+    date: "2025-07-10",
+    reactions: { metoo: 3, hug: 2, notalone: 1 }, // Initial reaction counts
+  },
+  {
+    id: 2,
+    category: "Professional",
+    text: "My startup pitch was rejected multiple times.",
+    learned: "Persistence is key to success.",
+    date: "2025-06-20",
+    reactions: { metoo: 5, hug: 0, notalone: 3 },
+  },
+];
+
+// Categories unchanged...
+
 export default function Browse() {
   const [filter, setFilter] = useState("All");
+  const [stories, setStories] = useState(sampleStories);
 
   const filteredStories =
     filter === "All"
-      ? sampleStories
-      : sampleStories.filter((story) => story.category === filter);
+      ? stories
+      : stories.filter((story) => story.category === filter);
+
+  // Handler to update reaction counts per story (optional: sync with backend)
+  const handleReactionChange = (storyId, type, reacted) => {
+    setStories((prevStories) =>
+      prevStories.map((story) => {
+        if (story.id !== storyId) return story;
+
+        const currentCount = story.reactions?.[type] || 0;
+        return {
+          ...story,
+          reactions: {
+            ...story.reactions,
+            [type]: reacted ? currentCount + 1 : Math.max(0, currentCount - 1),
+          },
+        };
+      })
+    );
+  };
 
   return (
     <main className="container mx-auto px-6 py-12 min-h-screen max-w-5xl bg-white">
@@ -45,7 +68,6 @@ export default function Browse() {
         Browse Failure Stories
       </h2>
 
-      {/* Category Filter Pills */}
       <nav
         aria-label="Story categories"
         className="flex flex-wrap justify-center gap-5 mb-12"
@@ -73,11 +95,18 @@ export default function Browse() {
         })}
       </nav>
 
-      {/* Stories Grid */}
       {filteredStories.length > 0 ? (
         <section className="grid gap-10 sm:grid-cols-2">
           {filteredStories.map((story) => (
-            <StoryCard key={story.id} story={story} blackAndWhite />
+            <StoryCard
+              key={story.id}
+              story={story}
+              blackAndWhite
+              reactions={story.reactions}
+              onReactionChange={(type, reacted) =>
+                handleReactionChange(story.id, type, reacted)
+              }
+            />
           ))}
         </section>
       ) : (
