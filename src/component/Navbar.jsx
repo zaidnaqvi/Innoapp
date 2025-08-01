@@ -18,11 +18,8 @@ export default function Navbar() {
     <header className="bg-white shadow sticky top-0 z-50">
       <nav className="container mx-auto  px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-black text-3xl font-extrabold tracking-wide"
-        >
-          Why <span className="text-blue-600">I</span> Failed
+        <Link to="/" className="text-black text-3xl font-medium tracking-wider">
+          Why <span className="text-yellow-300">I</span> Failed
         </Link>
 
         {/* Desktop Menu */}
@@ -31,9 +28,9 @@ export default function Navbar() {
             <li key={link.name}>
               <Link
                 to={link.path}
-                className={`hover:text-blue-600 transition-colors duration-300 ${
+                className={`hover:text-yellow-300 transition-colors duration-300 ${
                   location.pathname === link.path
-                    ? "text-blue-600 font-bold"
+                    ? "text-yellow-300 font-bold"
                     : ""
                 }`}
               >

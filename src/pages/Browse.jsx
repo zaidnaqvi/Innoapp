@@ -21,7 +21,7 @@ const sampleStories = [
     text: "I failed an important exam and felt devastated.",
     learned: "Never underestimate consistent study.",
     date: "2025-07-10",
-    reactions: { metoo: 3, hug: 2, notalone: 1 }, // Initial reaction counts
+    reactions: { metoo: 3, hug: 2, notalone: 1 },
   },
   {
     id: 2,
@@ -33,8 +33,6 @@ const sampleStories = [
   },
 ];
 
-// Categories unchanged...
-
 export default function Browse() {
   const [filter, setFilter] = useState("All");
   const [stories, setStories] = useState(sampleStories);
@@ -44,7 +42,7 @@ export default function Browse() {
       ? stories
       : stories.filter((story) => story.category === filter);
 
-  // Handler to update reaction counts per story (optional: sync with backend)
+  // Update reactions count when user reacts/unreacts
   const handleReactionChange = (storyId, type, reacted) => {
     setStories((prevStories) =>
       prevStories.map((story) => {
@@ -68,6 +66,7 @@ export default function Browse() {
         Browse Failure Stories
       </h2>
 
+      {/* Category filters */}
       <nav
         aria-label="Story categories"
         className="flex flex-wrap justify-center gap-5 mb-12"
@@ -79,14 +78,11 @@ export default function Browse() {
               key={label}
               onClick={() => setFilter(label)}
               aria-current={isActive ? "true" : undefined}
-              className={`
-                flex items-center space-x-2 px-6 py-2 rounded-full border border-black font-semibold transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-black
-                ${
-                  isActive
-                    ? "bg-black text-white scale-105 shadow-lg"
-                    : "bg-white text-black hover:bg-black hover:text-white"
-                }
-              `}
+              className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-semibold transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-black ${
+                isActive
+                  ? "bg-black text-white scale-105 shadow-lg border-black"
+                  : "bg-white text-black border-black hover:bg-black hover:text-white"
+              }`}
             >
               <span className="text-lg">{icon}</span>
               <span>{label}</span>
@@ -95,6 +91,7 @@ export default function Browse() {
         })}
       </nav>
 
+      {/* Stories Grid */}
       {filteredStories.length > 0 ? (
         <section className="grid gap-10 sm:grid-cols-2">
           {filteredStories.map((story) => (

@@ -15,23 +15,23 @@ export default function Home() {
 
         {/* Banner Content */}
         <div className="relative z-10 px-6 text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-yellow-300 drop-shadow-lg mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-light text-yellow-100 drop-shadow-lg mb-6 tracking-wide">
             Why{" "}
-            <span className="underline decoration-yellow-400 decoration-8 underline-offset-8">
+            <span className="underline decoration-yellow-300 decoration-2 underline-offset-8">
               I Failed
             </span>
           </h1>
-          <p className="text-lg md:text-2xl text-yellow-100 max-w-3xl mx-auto mb-6 highlight-text-shadow font-semibold tracking-wide">
+          <p className="text-lg md:text-2xl text-yellow-100 max-w-3xl mx-auto mb-6 highlight-text-shadow font-light tracking-wide">
             A safe, anonymous space to share your failures and inspire hope.
           </p>
-          <p className="text-yellow-200 italic max-w-xl mx-auto mb-12 drop-shadow-sm leading-relaxed">
+          <p className="text-yellow-200  max-w-xl mx-auto mb-5 drop-shadow-sm  tracking-wide">
             “Failure is not the opposite of success — it’s part of success.”
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-6 max-w-sm mx-auto animate-fade-in">
             <Link
               to="/login"
-              className="bg-yellow-400 text-black font-bold px-10 py-3 rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-105 transition-transform transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-300"
+              className="bg-yellow-400 text-black font-bold px-5 py-4 rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-105 transition-transform  focus:outline-none focus:ring-4 focus:ring-yellow-300"
               aria-label="Share your story - requires login"
             >
               Share Your Story
@@ -49,7 +49,7 @@ export default function Home() {
 
       {/* Informational Section */}
       <section className="container max-w-3xl mx-auto px-6 py-16 text-center space-y-8">
-        <p className="text-gray-800 text-2xl md:text-3xl font-semibold tracking-wide sm:px-4">
+        <p className="text-gray-800 text-2xl md:text-3xl font-bold tracking-wide sm:px-4">
           Everyone has setbacks. Here, you can share yours{" "}
           <span className="text-yellow-600 font-extrabold">anonymously</span>{" "}
           and find comfort in knowing you’re not alone.
@@ -63,7 +63,7 @@ export default function Home() {
       {/* Testimonials Section */}
       <section className="bg-yellow-50 py-16">
         <div className="container max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-14 tracking-tight">
+          <h2 className="text-4xl font-bold text-center text-gray-900 mb-14 tracking-tight">
             What Our Users Say
           </h2>
           <div className="space-y-12 max-w-3xl mx-auto">
@@ -97,7 +97,7 @@ export default function Home() {
 
       {/* Featured Stories Teaser */}
       <section className="container max-w-4xl mx-auto px-6 py-16 text-center space-y-6">
-        <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+        <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
           Featured Stories
         </h2>
         <p className="text-gray-700 max-w-2xl mx-auto px-2 md:px-0 md:text-lg leading-relaxed">
@@ -116,7 +116,7 @@ export default function Home() {
 
       {/* Call to Action Section */}
       <section className="bg-yellow-600 py-20 text-center text-white">
-        <h3 className="text-4xl font-extrabold mb-6 tracking-wide">
+        <h3 className="text-4xl font-light mb-6 tracking-wide">
           Ready to Share Your Journey?
         </h3>
         <p className="max-w-xl mx-auto mb-10 text-lg md:text-xl leading-relaxed px-4">
