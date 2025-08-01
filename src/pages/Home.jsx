@@ -47,7 +47,7 @@ function HowSharingFeelsSection() {
           </h6>
 
           {/* Steps container max width like the original 350px */}
-          <div style={{ maxWidth: "350px" }}>
+          <div style={{ maxWidth: "390px" }}>
             {[
               "Feel seen and heard — expressing your struggles in a supportive space.",
               "Recognize you're not alone; others share similar setbacks and growth journeys.",
@@ -63,7 +63,7 @@ function HowSharingFeelsSection() {
                   {i + 1}
                 </div>
                 {/* Step description */}
-                <div className="font-semibold text-lg leading-none flex-shrink">
+                <div className="font-semibold text-lg leading-6 flex-shrink tracking-wide">
                   {text}
                 </div>
               </div>
@@ -290,10 +290,10 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <h3 className="text-4xl font-light mb-6 tracking-wide">
+        <h3 className="text-4xl sm:mb-6  font-light mb-28 tracking-wide">
           Ready to Share Your Journey?
         </h3>
-        <p className="max-w-xl mx-auto mb-10 text-lg md:text-xl leading-relaxed px-4">
+        <p className="max-w-xl mx-auto sm:mb-10 mb-16 text-lg md:text-xl leading-relaxed px-4">
           Join our community today and inspire others by sharing your story of
           failure and growth. Your voice matters.
         </p>

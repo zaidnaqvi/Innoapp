@@ -1,12 +1,15 @@
 import { useState } from "react";
-import StoryCard from "../component/StoryCard";
 import {
   FaGraduationCap,
   FaBriefcase,
   FaUser,
   FaListAlt,
+  FaThumbsUp,
+  FaHeart,
+  FaHandsHelping,
 } from "react-icons/fa";
 
+// Category definitions with icons
 const categories = [
   { label: "All", icon: <FaListAlt /> },
   { label: "Academic", icon: <FaGraduationCap /> },
@@ -14,6 +17,7 @@ const categories = [
   { label: "Professional", icon: <FaBriefcase /> },
 ];
 
+// Sample stories data with reaction counts
 const sampleStories = [
   {
     id: 1,
@@ -21,7 +25,7 @@ const sampleStories = [
     text: "I failed an important exam and felt devastated.",
     learned: "Never underestimate consistent study.",
     date: "2025-07-10",
-    reactions: { metoo: 3, hug: 2, notalone: 1 },
+    reactions: { like: 15, love: 6, support: 4 },
   },
   {
     id: 2,
@@ -29,26 +33,117 @@ const sampleStories = [
     text: "My startup pitch was rejected multiple times.",
     learned: "Persistence is key to success.",
     date: "2025-06-20",
-    reactions: { metoo: 5, hug: 0, notalone: 3 },
+    reactions: { like: 25, love: 9, support: 7 },
   },
 ];
+
+// Reaction types with icons and labels similar to social platforms
+const reactionTypes = [
+  { type: "like", label: "Like", icon: <FaThumbsUp /> },
+  { type: "love", label: "Love", icon: <FaHeart /> },
+  { type: "support", label: "Support", icon: <FaHandsHelping /> },
+];
+
+// Category icon component (for clean reuse)
+const CategoryIcon = ({ category }) => {
+  switch (category) {
+    case "Academic":
+      return <FaGraduationCap className="text-blue-600" aria-hidden="true" />;
+    case "Professional":
+      return <FaBriefcase className="text-green-600" aria-hidden="true" />;
+    case "Personal":
+      return <FaUser className="text-pink-600" aria-hidden="true" />;
+    default:
+      return <FaListAlt className="text-gray-400" aria-hidden="true" />;
+  }
+};
+
+// Story card component resembling popular social feed card style
+function StoryCard({ story, onReactionToggle }) {
+  const [userReactions, setUserReactions] = useState({
+    like: false,
+    love: false,
+    support: false,
+  });
+
+  // Toggle reaction locally and notify parent to update counts
+  const toggleReaction = (type) => {
+    const newState = !userReactions[type];
+    setUserReactions((prev) => ({ ...prev, [type]: newState }));
+    if (onReactionToggle) onReactionToggle(story.id, type, newState);
+  };
+
+  return (
+    <article className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+      {/* Header with category and date */}
+      <div className="flex items-center justify-between mb-4 text-gray-600 font-semibold text-sm">
+        <div className="flex items-center gap-2">
+          <CategoryIcon category={story.category} />
+          <span className="capitalize">{story.category}</span>
+        </div>
+        <time
+          dateTime={story.date}
+          title={`Shared on ${new Date(story.date).toLocaleDateString()}`}
+          className="text-xs text-gray-400"
+        >
+          {new Date(story.date).toLocaleDateString()}
+        </time>
+      </div>
+
+      {/* Story text and lesson */}
+      <p className="text-gray-800 mb-4 text-base">{story.text}</p>
+      {story.learned && (
+        <p className="italic text-gray-600 mb-6 pl-4 border-l-4 border-yellow-400">
+          <span className="font-semibold">Lesson:</span> {story.learned}
+        </p>
+      )}
+
+      {/* Reaction buttons */}
+      <div className="flex items-center space-x-4">
+        {reactionTypes.map(({ type, label, icon }) => {
+          const active = userReactions[type];
+          return (
+            <button
+              key={type}
+              type="button"
+              aria-pressed={active}
+              aria-label={`${active ? "Remove" : "Add"} ${label}`}
+              className={`flex items-center gap-1 rounded-full px-4 py-1 text-sm font-semibold transition-colors select-none focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-yellow-400 ${
+                active
+                  ? "bg-yellow-400 text-white hover:bg-yellow-500"
+                  : "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+              }`}
+              onClick={() => toggleReaction(type)}
+            >
+              <span className="text-base">{icon}</span>
+              <span>{label}</span>
+              <span className="text-xs font-normal ml-1">
+                {story.reactions[type] + (active ? 1 : 0)}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </article>
+  );
+}
 
 export default function Browse() {
   const [filter, setFilter] = useState("All");
   const [stories, setStories] = useState(sampleStories);
 
+  // Filter stories by selected category
   const filteredStories =
     filter === "All"
       ? stories
       : stories.filter((story) => story.category === filter);
 
-  // Update reactions count when user reacts/unreacts
-  const handleReactionChange = (storyId, type, reacted) => {
+  // Update reactions count on toggle reaction
+  const handleReactionToggle = (storyId, type, reacted) => {
     setStories((prevStories) =>
       prevStories.map((story) => {
         if (story.id !== storyId) return story;
-
-        const currentCount = story.reactions?.[type] || 0;
+        const currentCount = story.reactions[type] || 0;
         return {
           ...story,
           reactions: {
@@ -61,15 +156,15 @@ export default function Browse() {
   };
 
   return (
-    <main className="container mx-auto px-6 py-12 min-h-screen max-w-5xl bg-white">
-      <h2 className="text-4xl font-extrabold text-black mb-10 text-center tracking-tight">
+    <main className="max-w-7xl mx-auto px-6 py-12 bg-gray-50 min-h-screen">
+      <h1 className="text-4xl font-extrabold text-center mb-16 tracking-tight text-gray-900">
         Browse Failure Stories
-      </h2>
+      </h1>
 
-      {/* Category filters */}
+      {/* Category Filter Pills */}
       <nav
         aria-label="Story categories"
-        className="flex flex-wrap justify-center gap-5 mb-12"
+        className="flex flex-wrap justify-center gap-6 mb-14"
       >
         {categories.map(({ label, icon }) => {
           const isActive = filter === label;
@@ -78,13 +173,13 @@ export default function Browse() {
               key={label}
               onClick={() => setFilter(label)}
               aria-current={isActive ? "true" : undefined}
-              className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-semibold transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-black ${
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold border-2 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-yellow-400 transition ${
                 isActive
-                  ? "bg-black text-white scale-105 shadow-lg border-black"
-                  : "bg-white text-black border-black hover:bg-black hover:text-white"
+                  ? "bg-yellow-500 text-white border-yellow-500 shadow-lg"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-yellow-100"
               }`}
             >
-              <span className="text-lg">{icon}</span>
+              <span className="text-xl">{icon}</span>
               <span>{label}</span>
             </button>
           );
@@ -93,21 +188,17 @@ export default function Browse() {
 
       {/* Stories Grid */}
       {filteredStories.length > 0 ? (
-        <section className="grid gap-10 sm:grid-cols-2">
+        <section className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {filteredStories.map((story) => (
             <StoryCard
               key={story.id}
               story={story}
-              blackAndWhite
-              reactions={story.reactions}
-              onReactionChange={(type, reacted) =>
-                handleReactionChange(story.id, type, reacted)
-              }
+              onReactionToggle={handleReactionToggle}
             />
           ))}
         </section>
       ) : (
-        <p className="text-center text-gray-700 font-semibold text-lg mt-20">
+        <p className="text-center text-gray-600 font-semibold text-lg mt-20">
           No stories found in this category.
         </p>
       )}
